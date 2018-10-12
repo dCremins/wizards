@@ -1,3 +1,9 @@
+import Logo from '@/objects/logo';
+import Inventory from '@/objects/inventory';
+import Display from '@/objects/display';
+import Controls from '@/objects/controls';
+//import Crystal from '@/objects/crystal';
+
 export default class Title extends Phaser.Scene {
   /**
    *  My custom scene.
@@ -23,6 +29,7 @@ export default class Title extends Phaser.Scene {
    *  @protected
    */
   preload() {
+    this.input.setDefaultCursor('url(assets/pointer.png), auto')
   }
 
   /**
@@ -33,54 +40,83 @@ export default class Title extends Phaser.Scene {
    */
   create(/* data */) {
     // Define center
+    /*
     const x = this.cameras.main.width / 2;
     const y = this.cameras.main.height / 2;
-
-    let inventory = []
-
-
-    this.add.image(600, 300, 'space');
-    this.add.image(x, 310, 'basement');
-    const ladder = this.add.image(x+150, 182, 'ladder');
-    let arnold = this.add.image(x+302, 315, 'arnold_sleep');
-    let box = this.add.image(x-90, 340, 'hat');
-    const lamp = this.add.image(x-260, 345, 'lamp');
-    ladder.setInteractive( { useHandCursor: true  } );
-
-    lamp.setInteractive( { useHandCursor: true  } );
-    lamp.on('pointerup', () => {
-      const yellow = this.add.image(300, this.cameras.main.height-100, 'yellow')
-      yellow.setInteractive( { useHandCursor: true  } );
-      inventory.push(yellow);
-      lamp.setInteractive(false); //doesn't work
-    });
-
-    box.setInteractive( { useHandCursor: true  } );
-    box.on('pointerup', () => {
-      box = this.add.image(x-90, 340, 'box');
-    });
-
-    arnold.setInteractive( { useHandCursor: true  } );
-    arnold.on('pointerup', () => arnold = this.add.image(x+302, 315, 'arnold_wake'));
-
-
-    const player = this.add.image(100, this.cameras.main.height-100, 'base');
-    let player_clothes = this.add.image(100, this.cameras.main.height-100, 'robe');
-    let player_hat = this.add.image(100, this.cameras.main.height-100, 'apprentice_hat');
-    /*
-    // add logo centered and slightly down from the top of the screen
-    const logo = this.add.image(x, this.cameras.main.height-(93/2), 'logo');
-    const label = this.add.text(x, y, 'Start', {
-      font: '64px Arial',
-      color: 'white',
-      stroke: 'black',
-      strokeThickness: 6
-    });
-    //move the center point of the label and make it interractive
-    label.setOrigin(0.5, 0.5).setInteractive();
-    //when the button is clicked, move to the next scene
-    label.on('pointerup', () => this.scene.start('Game'));
+    const scaleRatio = window.devicePixelRatio / 3;
     */
+    const canvasWidth = this.cameras.main.width
+    let inventoryX, inventoryY
+
+    if (canvasWidth >= 1000) {
+      this.playWidth = 1000
+      this.playHeight = 630
+      this.ratio = 1
+    } else if (canvasWidth >= 800) {
+      this.playWidth = 800
+      this.playHeight = 504
+      this.ratio = .8
+    } else if (canvasWidth >= 600) {
+      this.playWidth = 600
+      this.playHeight = 378
+      this.ratio = .6
+    } else if (canvasWidth >= 400) {
+      this.playWidth = 400
+      this.playHeight = 252
+      this.ratio = .4
+    } else {
+      this.playWidth = 300
+      this.playHeight = 189
+      this.ratio = .3
+    }
+    this.xCenter = (canvasWidth-this.playWidth)/2
+
+    this.inventory = this.add.existing(new Inventory(this));
+    this.display = this.add.existing(new Display(this));
+    this.controls = this.add.existing(new Controls(this));
+    this.mode = 'look';
+
+    const space = this.add.image(this.xCenter, 50, 'space').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight)
+    this.background = this.add.sprite(this.xCenter, 50, 'basement').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight)
+
+    const ladder = this.add.image(this.xCenter+(570*this.ratio), 50, 'ladder').setOrigin(0);
+    ladder.setDisplaySize(ladder.displayWidth*this.ratio, ladder.displayHeight*this.ratio);
+
+    let lamp = this.add.sprite(this.xCenter+(130*this.ratio), 50+(260*this.ratio), 'lamp').setOrigin(0);
+    lamp.setDisplaySize(lamp.displayWidth*this.ratio, lamp.displayHeight*this.ratio);
+    lamp.setInteractive( { useHandCursor: false  } );
+    lamp.contents = {kind: 'crystal', color:'yellow'}
+    lamp.description = ['It\'s a broken lamp.', 'There seems to be some kind of broken light bulb inside.']
+
+    lamp.on('pointerup', () => {
+      this.click(lamp)
+    });
+
+    let arnold = this.add.sprite(this.xCenter+(765*this.ratio), 50+(295*this.ratio), 'arnold_sleep').setOrigin(0);
+    arnold.setDisplaySize(arnold.displayWidth*this.ratio, arnold.displayHeight*this.ratio);
+    arnold.setInteractive( { useHandCursor: false  } );
+    arnold.on('pointerup', () => arnold.setTexture('arnold_wake', 0));
+
+    const player = this.add.image(this.xCenter, this.playHeight+50, 'base').setOrigin(0);
+    let player_clothes = this.add.sprite(this.xCenter, this.playHeight+50, 'robe').setOrigin(0);
+    let player_hat = this.add.sprite(this.xCenter, this.playHeight+50, 'apprentice_hat').setOrigin(0);
+  }
+
+  click(item) {
+    switch(this.mode) {
+      case 'take':
+        if(item.contents) {
+          this.inventory.store(this, item.contents)
+          item.description.pop()
+          item.contents = null
+        } else {
+          this.display.setText('There\'s nothing here to take.')
+        }
+        break;
+      default:
+        this.display.setText(item.description)
+        break;
+    }
   }
 
   /**
@@ -90,7 +126,11 @@ export default class Title extends Phaser.Scene {
    *  @param {number} t - Current internal clock time.
    *  @param {number} dt - Time elapsed since last update.
    */
+
   update(/* t, dt */) {
+    //console.log(window.innerWidth)
+    //console.log(this.cameras.main.width)
+
   }
 
   /**

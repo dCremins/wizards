@@ -37,6 +37,7 @@ export default class SplashScreen extends Phaser.Scene {
     this.load
       .image('logo')
       .image('space')
+      .image('scene')
       .image('basement')
       .image('box')
       .image('hat')
