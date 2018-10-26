@@ -2,6 +2,9 @@ import Logo from '@/objects/logo';
 import Inventory from '@/objects/inventory';
 import Display from '@/objects/display';
 import Controls from '@/objects/controls';
+import Container from '@/objects/container';
+import Person from '@/objects/person';
+import Item from '@/objects/item';
 //import Crystal from '@/objects/crystal';
 
 export default class Title extends Phaser.Scene {
@@ -78,7 +81,7 @@ export default class Title extends Phaser.Scene {
 
     const space = this.add.image(this.xCenter, 50, 'space').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight)
     this.background = this.add.sprite(this.xCenter, 50, 'basement').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight)
-
+/*
     const ladder = this.add.image(this.xCenter+(570*this.ratio), 50, 'ladder').setOrigin(0);
     ladder.setDisplaySize(ladder.displayWidth*this.ratio, ladder.displayHeight*this.ratio);
 
@@ -91,33 +94,46 @@ export default class Title extends Phaser.Scene {
     lamp.on('pointerup', () => {
       this.click(lamp)
     });
+*/
 
-    let arnold = this.add.sprite(this.xCenter+(765*this.ratio), 50+(295*this.ratio), 'arnold_sleep').setOrigin(0);
+    const ladder = this.add.existing( new Item(this, this.xCenter+(570*this.ratio), 50, 'ladder', {
+      name: 'ladder',
+      description: 'a ladder leading up to the workshop',
+      bolted: true
+    }))
+
+    let lamp = this.add.existing(
+      new Container(
+        this,
+        this.xCenter+(235*this.ratio),
+        50+(355*this.ratio),
+        'lamp',
+        [{sprite:'yellow', info:{description: 'a yellow rock that was mistaken for a light bulb', name: 'yellow crystal'}}],
+        'a broken lamp',
+        'lamp',
+        false
+      )
+    );
+
+    let arnold = this.add.existing(new Person(this, this.xCenter+(765*this.ratio), 50+(295*this.ratio), 'arnold_wake', {
+        name: 'Arnold Fluffybottom',
+        description: 'He\'s just so fluffy',
+        dialogue: {
+          'yellow crystal': 'Doesn\'t look anything like a light bulb to me.',
+          'wizard': 'Eh, I could take him or leave him'
+        }
+      }
+    ))
+/*    let arnold = this.add.sprite(this.xCenter+(765*this.ratio), 50+(295*this.ratio), 'arnold_sleep').setOrigin(0);
     arnold.setDisplaySize(arnold.displayWidth*this.ratio, arnold.displayHeight*this.ratio);
     arnold.setInteractive( { useHandCursor: false  } );
     arnold.on('pointerup', () => arnold.setTexture('arnold_wake', 0));
-
+*/
     const player = this.add.image(this.xCenter, this.playHeight+50, 'base').setOrigin(0);
     let player_clothes = this.add.sprite(this.xCenter, this.playHeight+50, 'robe').setOrigin(0);
     let player_hat = this.add.sprite(this.xCenter, this.playHeight+50, 'apprentice_hat').setOrigin(0);
   }
 
-  click(item) {
-    switch(this.mode) {
-      case 'take':
-        if(item.contents) {
-          this.inventory.store(this, item.contents)
-          item.description.pop()
-          item.contents = null
-        } else {
-          this.display.setText('There\'s nothing here to take.')
-        }
-        break;
-      default:
-        this.display.setText(item.description)
-        break;
-    }
-  }
 
   /**
    *  Handles updates to game logic, physics and game objects.

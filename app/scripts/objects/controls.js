@@ -13,8 +13,8 @@ export default class Controls extends Phaser.GameObjects.Group {
     super(scene);
 
     this.addMultiple([
-      new ControlButton(scene, scene.playHeight+80, 'Look At', 'look', 'url(assets/pointer.png), auto'),
-      new ControlButton(scene, scene.playHeight+120, 'Pick Up', 'take', 'url(assets/take.cur), pointer'),
+      new ControlButton(scene, scene.playHeight+80, 'Look', 'look', 'url(assets/pointer.png), auto'),
+      new ControlButton(scene, scene.playHeight+120, 'Take', 'take', 'url(assets/take.cur), pointer'),
       new ControlButton(scene, scene.playHeight+160, 'Use', 'use', 'pointer')
     ], true)
   }

@@ -8,7 +8,7 @@ export default class Display extends Phaser.GameObjects.Text {
    */
   constructor(scene) {
     //  TODO: Stub.
-    super(scene, scene.xCenter+270, scene.playHeight+80, '');
+    super(scene, scene.xCenter+270, scene.playHeight+80, '', {wordWrap: { width: scene.playWidth/3}});
   }
 
 //  setText(text) {
