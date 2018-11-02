@@ -1,3 +1,5 @@
+import Dialogue from '@/objects/dialogue';
+
 export default class Person extends Phaser.GameObjects.Image {
 
   constructor(scene, x, y, sprite, info) {
@@ -11,6 +13,9 @@ export default class Person extends Phaser.GameObjects.Image {
       onUse: info.onUse
     }
     this.dialogue = info.dialogue;
+    this.options = info.options;
+    this.asked = 'none';
+    this.responses = scene.add.group()
     this.inventory = info.inventory
     this.setInteractive({useHandCursor: false})
 
@@ -31,21 +36,54 @@ export default class Person extends Phaser.GameObjects.Image {
     scene.children.add(this);
   }
 
+  ask(scene, key) {
+    let height = scene.playHeight+60
+    if (scene.display) {
+      height += scene.display.displayHeight
+    }
+    this.responses.clear(true, true)
+    this.options[key].forEach( option => {
+      this.responses.add(new Dialogue(scene, height, option, this), true)
+      height += 20
+    })
+    if (key === 'none') {
+      this.responses.add(new Dialogue(scene, height, {key: 'leave', text: 'Leave'}, this), true)
+    } else {
+      this.responses.add(new Dialogue(scene, height, {key: this.asked, text: 'Back'}, this), true)
+    }
+  }
+
+  respond(scene, key) {
+    if (this.dialogue[key]) {
+      scene.display.setText([this.name+': ',this.dialogue[key]]);
+    } else {
+      scene.display.setText(this.name+': What do you want to know?');
+    }
+    if (this.options[key]) {
+      this.ask(scene, key)
+    } else {
+      this.responses.clear(true, true)
+      this.responses.add(new Dialogue(scene, scene.playHeight+60+scene.display.displayHeight, {
+        key: this.asked,
+        text: 'Back'
+      }, this), true)
+    }
+  }
+
   take(scene) {
-    scene.display.setText('They probably wouldn\'t like that.');
+    scene.display.setText('That doesn\'t seem like a good idea.');
     scene.mode = 'look';
     scene.input.setDefaultCursor('url(assets/pointer.png), auto');
   }
 
   use(scene, item) {
-    if (this.info.onUse) {
-      this.info.onUse
-      return
-    } else if (item) {
+    if (item) {
       this.give(scene, item)
       return
     } else {
-      scene.display.setText('You aren\'t holding anything.');
+      scene.display.setText(this.name+': What\'s up?');
+      this.ask(scene, 'none')
+      return;
     }
     scene.mode = 'look';
     scene.input.setDefaultCursor('url(assets/pointer.png), auto');
@@ -53,7 +91,7 @@ export default class Person extends Phaser.GameObjects.Image {
 
   give(scene, item) {
     if (this.needs && this.needs === item.info.name) {
-      scene.display.setText([this.name+': ', 'Thanks!']);
+      scene.display.setText(['You give them the '+topic+'.', this.name+': ', 'Thanks!']);
       scene.inventory.remove(item, true, true)
     } else {
       this.show(scene, item.info.name)
@@ -65,11 +103,30 @@ export default class Person extends Phaser.GameObjects.Image {
 
   show(scene, topic) {
     if (this.dialogue[topic]) {
-      scene.display.setText([this.name+': ', this.dialogue[topic]]);
+      scene.display.setText(['You show them the '+topic+'.', '', this.name+': ',this.dialogue[topic]]);
     } else {
-      scene.display.setText('They don\'t seem that interested in that.');
+      scene.display.setText(['You show them the '+topic+'.', 'They don\'t seem that interested in that.']);
     }
     scene.mode = 'look';
     scene.input.setDefaultCursor('url(assets/pointer.png), auto');
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -120,7 +120,34 @@ export default class Title extends Phaser.Scene {
         description: 'He\'s just so fluffy',
         dialogue: {
           'yellow crystal': 'Doesn\'t look anything like a light bulb to me.',
-          'wizard': 'Eh, I could take him or leave him'
+          'wizard': 'Eh, I could take him or leave him',
+          'ritual-what': 'Magic? I don\'t know.',
+          'crystals': 'That idiot upstairs keeps mistaking them for other things and putting them away wrong.',
+          'reginald': 'Ugh, that idiot. I think he can only see silhouettes.',
+          'arnold': 'I\'m the wizard\'s familiar. As you can see, I am very fluffy.'
+        },
+        options: {
+          'none': [{
+            key: 'ritual',
+            text: 'Ask about the ritual'
+          }, {
+            key: 'upstairs',
+            text: 'Ask about upstairs'
+          }, {
+            key: 'arnold',
+            text: 'Ask Arnold about himself'
+          }],
+          'ritual': [{
+            key: 'crystals',
+            text: 'Ask where the crystals are'
+          }, {
+            key: 'ritual-what',
+            text: 'Ask what the ritual is for'
+          }],
+          'upstairs':[{
+            key: 'reginald',
+            text: 'Ask about the suit of armor'
+          }]
         }
       }
     ))

@@ -42,7 +42,10 @@ export default class Item extends Phaser.GameObjects.Image {
           break;
         case 'use':
           if (scene.inventory.contains(this)) {
+            scene.display.setText('You grab the '+this.info.name+'.');
             scene.held = this;
+            console.log(sprite)
+            scene.input.setDefaultCursor('grab')
           } else {
             this.use(scene, scene.held)
           }
