@@ -15,11 +15,37 @@ import * as scenes from '@/scenes';
 /**
  *  Game canvas width.
  */
-export const width = window.innerWidth;
+ const canvasWidth = window.innerWidth;
+ let playWidth, playHeight, ratio
+ if (canvasWidth >= 1000) {
+   playWidth = 1000;
+   playHeight = 630;
+   ratio = 1;
+ } else if (canvasWidth >= 800) {
+   playWidth = 800;
+   playHeight = 504;
+   ratio = .8;
+ } else if (canvasWidth >= 600) {
+   playWidth = 600;
+   playHeight = 378;
+   ratio = .6;
+ } else if (canvasWidth >= 400) {
+   playWidth = 400;
+   playHeight = 252;
+   ratio = .4;
+ } else {
+   playWidth = 300;
+   playHeight = 189;
+   ratio = .3;
+ }
+ export const width = playWidth;
+ export const height = window.innerHeight;
+ export const origin = 0;
+//export const width = window.innerWidth;
 /**
  *  Game canvas height.
  */
-export const height = window.innerHeight;
+//export const height = window.innerHeight;
 
 /**
  *  Adjust zoom factor.

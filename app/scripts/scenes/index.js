@@ -8,4 +8,4 @@
 
 export {default as SplashScreen} from './splash-screen';
 export {default as Game} from './game';
-export {default as Title} from './title';
+export {default as Basement} from './basement';

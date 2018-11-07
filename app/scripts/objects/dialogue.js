@@ -23,7 +23,6 @@ export default class Dialogue extends Phaser.GameObjects.Text {
     this.on('pointerout', () => {
       this.setBackgroundColor('#000')
     })
-
     this.on('pointerup', () => {
       if (option.key === 'leave') {
         person.responses.clear(true, true)
@@ -32,9 +31,11 @@ export default class Dialogue extends Phaser.GameObjects.Text {
         scene.input.setDefaultCursor('url(assets/pointer.png), auto');
         return
       } else if (option.text === 'Back') {
-        person.ask(scene, option.key)
+        person.back(scene)
+      } else {
+        person.asked.push(option.key)
+        person.respond(scene, option.key)
       }
-      person.respond(scene, option.key)
     });
   }
 }
