@@ -7,11 +7,12 @@ export default class ControlButton extends Phaser.GameObjects.Text {
    *  @extends Phaser.GameObjects.Group
    *  @param {Phaser.Scene} scene - The scene that owns this sprite.
    */
-  constructor(scene, height, label, mode, cursor) {
-    super(scene, scene.xCenter+170, height, label, {
+  constructor(scene, x, y, label, mode, cursor) {
+    super(scene, x, y, label, {
       backgroundColor:'#5b84c6',
       padding:5
     });
+    this.setDisplaySize(70, 45)
 
     this.setInteractive({ useHandCursor: false  })
 

@@ -1,4 +1,5 @@
 import Inventory from '@/objects/inventory';
+import Player from '@/objects/player';
 import Display from '@/objects/display';
 import Controls from '@/objects/controls';
 import Container from '@/objects/container';
@@ -45,6 +46,20 @@ export default class Basement extends Phaser.Scene {
     this.xCenter = (canvasWidth-this.playWidth)/2;
 
     this.inventory = this.add.existing(new Inventory(this));
+
+    this.player = this.add.existing(new Player(this, 'base'))
+    this.player.setClothes(this, new Item(this, this.xCenter, this.playHeight+50, 'robe', {
+      name: 'apprentice hat',
+      description: 'a long robe, worn by wizard\'s apprentices',
+    }));
+    this.player.setHat(this, new Item(this, this.xCenter, this.playHeight+50, 'apprentice_hat', {
+      name: 'apprentice hat',
+      description: 'a long hood with a star on the end, worn by wizard\'s apprentices',
+    }));
+    //this.add.image(this.xCenter, this.playHeight+50, 'base').setOrigin(0);
+    //this.add.sprite(this.xCenter, this.playHeight+50, 'robe').setOrigin(0);
+    //this.add.sprite(this.xCenter, this.playHeight+50, 'apprentice_hat').setOrigin(0);
+
     this.display = this.add.existing(new Display(this));
     this.controls = this.add.existing(new Controls(this));
     this.mode = 'look';
@@ -63,8 +78,8 @@ export default class Basement extends Phaser.Scene {
 
     this.add.existing(new Container(
       this,
-      this.xCenter+(235*this.ratio),
-      50+(355*this.ratio),
+      this.xCenter+(150*this.ratio),
+      50+(275*this.ratio),
       'lamp',
       [{sprite:'yellow', info:{description: 'a yellow rock that was mistaken for a light bulb', name: 'yellow crystal'}}],
       'a broken lamp',
@@ -108,10 +123,6 @@ export default class Basement extends Phaser.Scene {
       },
       onUse: 'You scratch behind Arnold\'s ears. He\'s purring.'
     }));
-
-    this.add.image(this.xCenter, this.playHeight+50, 'base').setOrigin(0);
-    this.add.sprite(this.xCenter, this.playHeight+50, 'robe').setOrigin(0);
-    this.add.sprite(this.xCenter, this.playHeight+50, 'apprentice_hat').setOrigin(0);
   }
 
   update(/* t, dt */) {

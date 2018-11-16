@@ -11,7 +11,8 @@ export default class Container extends Phaser.GameObjects.Sprite {
    */
   constructor(scene, x, y, sprite, contents, description, name, locked) {
     super(scene, x, y, sprite);
-
+    this.setDisplaySize(this.width*scene.ratio, this.height*scene.ratio);
+    this.setOrigin(0);
     //  Add this game object to the owner scene.
     this.contents = [];
     this.name = name;

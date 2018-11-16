@@ -2,7 +2,7 @@ export default class Item extends Phaser.GameObjects.Image {
 
   constructor(scene, x, y, sprite, info) {
     super(scene, x, y, sprite);
-
+    this.setDisplaySize(this.width*scene.ratio, this.height*scene.ratio);
     this.setOrigin(0);
     this.name = info.name;
     this.info = {
