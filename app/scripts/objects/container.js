@@ -1,4 +1,4 @@
-export default class Container extends Phaser.GameObjects.Sprite {
+export default class Container extends Phaser.GameObjects.Image {
   /**
    *  My custom sprite.
    *
@@ -17,7 +17,6 @@ export default class Container extends Phaser.GameObjects.Sprite {
     this.contents = [];
     this.name = name;
     this.locked = locked;
-    this.setDisplaySize(this.displayWidth*scene.ratio, this.displayHeight*scene.ratio);
     this.setInteractive( { useHandCursor: false  } );
     this.description = ['It\'s '+description];
 
@@ -41,6 +40,8 @@ export default class Container extends Phaser.GameObjects.Sprite {
       this.contents.push(item)
       this.description.push('There appears to be '+item.info.description+' inside.')
     })
+
+    scene.children.add(this)
   }
 
   put(scene, item) {

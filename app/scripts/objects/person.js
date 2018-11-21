@@ -57,7 +57,7 @@ export default class Person extends Phaser.GameObjects.Image {
   ask(scene, key) {
     let height = scene.playHeight+70;
     if (scene.display) {
-      height += scene.display.displayHeight;
+      height = scene.display.y + scene.display.displayHeight;
     }
     this.responses.clear(true, true);
     this.options[key].forEach( option => {
@@ -73,19 +73,23 @@ export default class Person extends Phaser.GameObjects.Image {
 
   respond(scene, key) {
     const back = (this.asked[this.asked.length - 1]);
+
     if (this.dialogue[key]) {
       scene.display.setText([this.name+': ',this.dialogue[key]]);
     } else {
       scene.display.setText(this.name+': What do you want to know?');
     }
+
+    let height = scene.playHeight+70;
+    if (scene.display) {
+      height = scene.display.y + scene.display.displayHeight;
+    }
+
     if (this.options[key]) {
       this.ask(scene, key);
     } else {
       this.responses.clear(true, true);
-      this.responses.add(new Dialogue(scene, scene.playHeight+60+scene.display.displayHeight, {
-        key: back,
-        text: 'Back'
-      }, this), true);
+      this.responses.add(new Dialogue(scene, height, {key: 'back', text: 'Back'}, this), true);
     }
   }
 

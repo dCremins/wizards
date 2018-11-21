@@ -12,7 +12,8 @@ export default class ControlButton extends Phaser.GameObjects.Text {
       backgroundColor:'#5b84c6',
       padding:5
     });
-    this.setDisplaySize(70, 45)
+    this.setOrigin(0);
+    this.setDisplaySize(scene.player.displayWidth / 2, scene.player.displayHeight / 3)
 
     this.setInteractive({ useHandCursor: false  })
 

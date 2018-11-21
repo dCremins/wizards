@@ -19,13 +19,13 @@ export default class Inventory extends Phaser.GameObjects.Group {
     case 0:
     case 1:
     case 2:
-      itemPosition = (scene.xCenter+scene.background.displayWidth)-(50*(this.getLength()+1));
+      itemPosition = (scene.background.displayWidth)-(50*(this.getLength()+1));
       itemHeight = scene.playHeight+10+(50*scene.ratio);
       break;
     case 3:
     case 4:
     case 5:
-      itemPosition = (scene.xCenter+scene.background.displayWidth)-(50*((this.getLength()-4)+1));
+      itemPosition = (scene.background.displayWidth)-(50*((this.getLength()-4)+1));
       itemHeight = scene.playHeight+10+(120*scene.ratio);
       break;
     default:

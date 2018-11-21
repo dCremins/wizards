@@ -8,7 +8,13 @@ export default class Dialogue extends Phaser.GameObjects.Text {
    *  @param {Phaser.Scene} scene - The scene that owns this sprite.
    */
   constructor(scene, height, option, person) {
-    super(scene, scene.xCenter+270, height, option.text, {
+
+    const control_width = (scene.player.displayWidth / 2)
+    const control_height = (scene.player.displayHeight) / 3
+    const spacing = (scene.player.displayHeight - (control_height * 2)) / 3
+    const x = scene.player.x + (control_width * 2) + (spacing * 3) + scene.player.displayWidth
+
+    super(scene, x, height, option.text, {
       padding:5,
       width: scene.playWidth/2,
       wordWrap: { width: scene.playWidth/2}
