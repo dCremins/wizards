@@ -25,7 +25,6 @@ export default class Basement extends Phaser.Scene {
       name: 'ladder',
       description: 'a ladder leading up to the workshop',
       onUse: function (game) {
-        console.log(game)
         game.scene.start('Workshop', {
           inventory: this.inventory,
           player: this.player,

@@ -13,23 +13,23 @@ export default class ControlButton extends Phaser.GameObjects.Text {
       padding:5
     });
     this.setOrigin(0);
-    this.setDisplaySize(scene.player.displayWidth / 2, scene.player.displayHeight / 3)
+    this.setDisplaySize(scene.player.displayWidth / 2, scene.player.displayHeight / 3);
 
-    this.setInteractive({ useHandCursor: false  })
+    this.setInteractive({ useHandCursor: false  });
 
     this.on('pointerover', () => {
-      this.setBackgroundColor('#9ebced')
-      this.setColor('#313b4c')
-    })
+      this.setBackgroundColor('#9ebced');
+      this.setColor('#313b4c');
+    });
 
     this.on('pointerout', () => {
-      this.setBackgroundColor('#5b84c6')
-      this.setColor('#ffffff')
-    })
+      this.setBackgroundColor('#5b84c6');
+      this.setColor('#ffffff');
+    });
 
     this.on('pointerup', () => {
       scene.mode = mode;
-      scene.input.setDefaultCursor(cursor)
+      scene.input.setDefaultCursor(cursor);
     });
   }
 }

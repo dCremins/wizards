@@ -7,11 +7,12 @@ export default class Player extends Phaser.GameObjects.Image {
   }
 
   setHat(scene, hat) {
-    hat.setPosition(0, scene.playHeight+50)
+    hat.setPosition(0, scene.playHeight+50);
     hat.setDisplaySize(this.width*scene.ratio, this.height*scene.ratio);
   }
 
   setClothes(scene, clothes) {
-
+    clothes.setPosition(0, scene.playHeight+50);
+    clothes.setDisplaySize(this.width*scene.ratio, this.height*scene.ratio);
   }
 }

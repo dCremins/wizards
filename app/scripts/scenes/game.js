@@ -43,7 +43,7 @@ export default class Game extends Phaser.Scene {
 
     this.inventory = this.add.existing(new Inventory(this));
 
-    this.player = this.add.existing(new Player(this, 'base'))
+    this.player = this.add.existing(new Player(this, 'base'));
     this.player.setClothes(this, new Item(this, 0, this.playHeight+50, 'robe', {
       name: 'apprentice hat',
       description: 'a long robe, worn by wizard\'s apprentices',
@@ -60,7 +60,7 @@ export default class Game extends Phaser.Scene {
     this.display = this.add.existing(new Display(this));
     this.mode = 'look';
 
-    this.room = this.scene.get('Basement')
+    this.room = this.scene.get('Basement');
   }
 
   update(/* t, dt */) {

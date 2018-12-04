@@ -8,10 +8,10 @@ export default class Display extends Phaser.GameObjects.Text {
    */
   constructor(scene) {
     //  TODO: Stub.
-    const width = (scene.player.displayWidth / 2)
-    const height = (scene.player.displayHeight) / 3
-    const spacing = (scene.player.displayHeight - (height * 2)) / 3
-    const x = scene.player.x + (width * 2) + (spacing * 2) + scene.player.displayWidth
+    const width = (scene.player.displayWidth / 2);
+    const height = (scene.player.displayHeight) / 3;
+    const spacing = (scene.player.displayHeight - (height * 2)) / 3;
+    const x = scene.player.x + (width * 2) + (spacing * 2) + scene.player.displayWidth;
 
     super(scene, x, scene.player.y + spacing, '', {
       lineSpacing: 7,

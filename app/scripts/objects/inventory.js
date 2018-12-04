@@ -14,7 +14,7 @@ export default class Inventory extends Phaser.GameObjects.Group {
   }
 
   store(scene, item) {
-    let itemPosition, itemHeight, stored;
+    let itemPosition, itemHeight;
     switch(this.getLength()) {
     case 0:
     case 1:
@@ -31,7 +31,6 @@ export default class Inventory extends Phaser.GameObjects.Group {
     default:
       scene.display.setText('Your inventory is too full to pick this up.');
       return;
-      break;
     }
 
     if (item.visible) {

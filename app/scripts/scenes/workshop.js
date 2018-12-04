@@ -6,8 +6,7 @@ export default class Workshop extends Phaser.Scene {
   }
 
   init(data) {
-    console.log(data)
-    this.player = data.player
+    this.player = data.player;
   }
 
   preload() {
@@ -15,7 +14,6 @@ export default class Workshop extends Phaser.Scene {
   }
 
   create(/* data */) {
-    console.log(this)
     this.add.image(this.xCenter, 50, 'space').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight);
     this.background = this.add.sprite(this.xCenter, 50, 'basement').setOrigin(0).setDisplaySize(this.playWidth, this.playHeight);
   }

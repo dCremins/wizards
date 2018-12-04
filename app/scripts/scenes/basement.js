@@ -45,7 +45,7 @@ export default class Basement extends Phaser.Scene {
 
     this.inventory = this.add.existing(new Inventory(this));
 
-    this.player = this.add.existing(new Player(this, 'base'))
+    this.player = this.add.existing(new Player(this, 'base'));
     this.player.setClothes(this, new Item(this, 0, this.playHeight+50, 'robe', {
       name: 'apprentice hat',
       description: 'a long robe, worn by wizard\'s apprentices',
@@ -69,7 +69,6 @@ export default class Basement extends Phaser.Scene {
       name: 'ladder',
       description: 'a ladder leading up to the workshop',
       onUse: function (game) {
-        console.log(game)
         game.scene.start('Workshop', {
           inventory: this.inventory,
           player: this.player,

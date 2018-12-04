@@ -72,8 +72,6 @@ export default class Person extends Phaser.GameObjects.Image {
   }
 
   respond(scene, key) {
-    const back = (this.asked[this.asked.length - 1]);
-
     if (this.dialogue[key]) {
       scene.display.setText([this.name+': ',this.dialogue[key]]);
     } else {
