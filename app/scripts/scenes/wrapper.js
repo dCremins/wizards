@@ -1,13 +1,12 @@
-import Inventory from '@/objects/inventory';
-import Player from '@/objects/player';
-import Display from '@/objects/display';
-import Controls from '@/objects/controls';
-import Item from '@/objects/item';
+import Player from '@/people/player';
+import Display from '@/structure/display';
+import Controls from '@/structure/controls';
+import Item from '@/items/item';
 
 
-export default class Game extends Phaser.Scene {
+export default class Wrapper extends Phaser.Scene {
   constructor() {
-    super({key: 'Game'});
+    super({key: 'Wrapper'});
   }
 
   init(/* data */) {
@@ -41,26 +40,31 @@ export default class Game extends Phaser.Scene {
       this.ratio = .3;
     }
 
-    this.inventory = this.add.existing(new Inventory(this));
-
     this.player = this.add.existing(new Player(this, 'base'));
-    this.player.setClothes(this, new Item(this, 0, this.playHeight+50, 'robe', {
+    this.player.setClothes(this, new Item({
+      scene: this,
+      x: 0,
+      y: this.playHeight+50,
+      sprite: 'robe',
       name: 'apprentice hat',
       description: 'a long robe, worn by wizard\'s apprentices',
     }));
-    this.player.setHat(this, new Item(this, 0, this.playHeight+50, 'apprentice_hat', {
+
+    this.player.setHat(this, new Item({
+      scene: this,
+      x: 0,
+      y: this.playHeight+50,
+      sprite: 'apprentice_hat',
       name: 'apprentice hat',
       description: 'a long hood with a star on the end, worn by wizard\'s apprentices',
     }));
-    //this.add.image(0, this.playHeight+50, 'base').setOrigin(0);
-    //this.add.sprite(0, this.playHeight+50, 'robe').setOrigin(0);
-    //this.add.sprite(0, this.playHeight+50, 'apprentice_hat').setOrigin(0);
 
     this.controls = this.add.existing(new Controls(this));
     this.display = this.add.existing(new Display(this));
     this.mode = 'look';
+    console.log(this.playHeight);
 
-    this.room = this.scene.get('Basement');
+    this.room = this.scene.launch('Basement');
   }
 
   update(/* t, dt */) {

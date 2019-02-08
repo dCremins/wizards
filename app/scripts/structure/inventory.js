@@ -1,4 +1,4 @@
-import Item from '@/objects/item';
+import Item from '@/items/item';
 
 export default class Inventory extends Phaser.GameObjects.Group {
   /**

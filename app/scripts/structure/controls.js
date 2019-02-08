@@ -1,4 +1,4 @@
-import ControlButton from '@/objects/control-button';
+import ControlButton from '@/structure/control-button';
 
 export default class Controls extends Phaser.GameObjects.Group {
   /**
