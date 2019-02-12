@@ -1,4 +1,4 @@
-import ControlButton from '@/objects/control-button';
+import ControlButton from '@/structure/control-button';
 
 export default class Controls extends Phaser.GameObjects.Group {
   /**
@@ -11,7 +11,7 @@ export default class Controls extends Phaser.GameObjects.Group {
    */
   constructor(scene) {
     super(scene);
-    const x = scene.player.x + scene.player.displayWidth;
+    const x = scene.player.x + scene.player.displayWidth+5;
     const height = (scene.player.displayHeight) / 3;
     const spacing = (scene.player.displayHeight - (height * 2)) / 3;
     const y = scene.player.y + spacing;

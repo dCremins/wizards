@@ -8,5 +8,5 @@
 
 export {default as SplashScreen} from './splash-screen';
 export {default as Workshop} from './workshop';
-export {default as Game} from './game';
-export {default as Basement} from './basement_test';
+export {default as Wrapper} from './wrapper';
+export {default as Basement} from './basement';
