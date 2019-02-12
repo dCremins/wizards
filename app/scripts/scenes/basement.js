@@ -14,14 +14,13 @@ export default class Basement extends Phaser.Scene {
   }
 
   create(/* data */) {
-    console.log(this)
-    this.add.image(0, 50, 'space').setOrigin(0).setDisplaySize(this.cameras.main.width, this.cameras.main.height-50);
-    this.background = this.add.sprite(0, 0, 'basement').setOrigin(0).setDisplaySize(this.cameras.main.width, this.cameras.main.height);
+    this.add.image(0, 20, 'space').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
+    this.background = this.add.sprite(0, 20, 'basement').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
 
     this.add.existing( new Item({
       scene: this,
-      x: 0+(570*this.ratio),
-      y: 50,
+      x: 570,
+      y: 0,
       sprite: 'ladder',
       name: 'ladder',
       description: 'a ladder leading up to the workshop',
@@ -31,8 +30,8 @@ export default class Basement extends Phaser.Scene {
 
     this.add.existing( new Container({
       scene: this,
-      x: 0+(125*this.ratio),
-      y: 50+(260*this.ratio),
+      x: 125,
+      y: 260,
       sprite: 'lamp',
       name: 'lamp',
       description: 'a broken lamp',
