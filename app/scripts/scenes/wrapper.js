@@ -43,7 +43,7 @@ export default class Wrapper extends Phaser.Scene {
 
     this.controls = this.add.existing(new Controls(this));
     this.display = this.add.existing(new Display(this));
-    this.mode = 'look';
+    this.registry.set('mode', 'look')
 
     this.room = this.scene.launch('Basement');
   }

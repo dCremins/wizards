@@ -18,7 +18,6 @@ export default class Display extends Phaser.GameObjects.Text {
       wordWrap: { width: scene.registry.get('width')-(scene.player.displayWidth*2)-30}
     });
     this.setOrigin(0);
-    console.log(scene.registry.get('width'),'|',scene.player.displayWidth*2)
   }
 
 //  setText(text) {

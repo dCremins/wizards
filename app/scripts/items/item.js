@@ -14,16 +14,21 @@ export default class Item extends Phaser.GameObjects.Image {
     this.setDisplaySize(this.width*ratio, this.height*ratio);
     this.setOrigin(0);
     this.name = name;
+    this.setName(name)
     this.description = description;
     this.type = type;
     this.bolted = bolted;
 
+
+
     this.setInteractive({ useHandCursor: false  });
     const player = scene.registry.get('player')
+
     this.on('pointerdown', () => {
-      switch(scene.mode) {
+      let mode = scene.registry.get('mode')
+      switch(mode) {
       case 'take':
-        player.take(this);
+        player.take(this, scene);
         break;
       case 'put':
         player.put(this);
