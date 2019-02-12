@@ -17,31 +17,9 @@ export default class Wrapper extends Phaser.Scene {
   }
 
   create(/* data */) {
-    const canvasWidth = this.cameras.main.width;
-    if (canvasWidth >= 1000) {
-      this.registry.set('width', 1000);
-      this.registry.set('height', 630);
-      this.registry.set('ratio', 1);
-    } else if (canvasWidth >= 800) {
-      this.registry.set('width', 800);
-      this.registry.set('height', 504);
-      this.registry.set('ratio', .8);
-    } else if (canvasWidth >= 600) {
-      this.registry.set('width', 600);
-      this.registry.set('height', 378);
-      this.registry.set('ratio', .6);
-    } else if (canvasWidth >= 400) {
-      this.registry.set('width', 400);
-      this.registry.set('height', 252);
-      this.registry.set('ratio', .4);
-    } else {
-      this.registry.set('width', 300);
-      this.registry.set('height', 189);
-      this.registry.set('ratio', .3);
-    }
-
 
     this.player = this.add.existing(new Player(this, 'base'));
+    this.registry.set('player', this.player)
     const clothes = this.add.existing(new Item({
       scene: this,
       x: 0,

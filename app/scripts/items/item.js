@@ -9,27 +9,30 @@
 
 export default class Item extends Phaser.GameObjects.Image {
   constructor({scene, x, y, sprite, name='junk', description='You don\'t see anything interesting about that.', type='junk', bolted=true} = {}) {
-    super(scene, (x*scene.registry.get('ratio')), 20+(y*scene.registry.get('ratio')), sprite);
-    this.setDisplaySize(this.width*scene.registry.get('ratio'), this.height*scene.registry.get('ratio'));
+    const ratio = scene.registry.get('ratio');
+    super(scene, (x*ratio), 20+(y*ratio), sprite);
+    this.setDisplaySize(this.width*ratio, this.height*ratio);
     this.setOrigin(0);
     this.name = name;
     this.description = description;
     this.type = type;
     this.bolted = bolted;
 
-    this.on('pointerup', () => {
+    this.setInteractive({ useHandCursor: false  });
+    const player = scene.registry.get('player')
+    this.on('pointerdown', () => {
       switch(scene.mode) {
       case 'take':
-        scene.player.take(this);
+        player.take(this);
         break;
       case 'put':
-        scene.player.put(this);
+        player.put(this);
         break;
       case 'use':
-        scene.player.use(this);
+        player.use(this);
         break;
       default:
-        scene.player.look(this);
+        player.look(this);
         break;
       }
     });

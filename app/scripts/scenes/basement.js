@@ -7,6 +7,8 @@ export default class Basement extends Phaser.Scene {
   }
 
   init(/* data */) {
+
+    this.registry.set('room', 'Basement')
   }
 
   preload() {
@@ -15,7 +17,7 @@ export default class Basement extends Phaser.Scene {
 
   create(/* data */) {
     this.add.image(0, 20, 'space').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
-    this.background = this.add.sprite(0, 20, 'basement').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
+    this.background = this.add.image(0, 20, 'basement').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
 
     this.add.existing( new Item({
       scene: this,
@@ -48,10 +50,19 @@ export default class Basement extends Phaser.Scene {
           description: 'a yellow rock that was mistaken for a light bulb',
           type: 'crystal',
           bolted: false
+        }),
+        new Item({
+          scene: this,
+          x: 0,
+          y: 0,
+          sprite: 'yellow',
+          name: 'yellow crystal',
+          description: 'a yellow rock that was mistaken for a light bulb',
+          type: 'crystal',
+          bolted: false
         })
       ]
     }));
-
   }
 
   update(/* t, dt */) {
