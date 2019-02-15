@@ -50,19 +50,20 @@ export default class Basement extends Phaser.Scene {
           description: 'a yellow rock that was mistaken for a light bulb',
           type: 'crystal',
           bolted: false
-        }),
-        new Item({
-          scene: this,
-          x: 0,
-          y: 0,
-          sprite: 'yellow',
-          name: 'yellow crystal',
-          description: 'a yellow rock that was mistaken for a light bulb',
-          type: 'crystal',
-          bolted: false
         })
       ]
     }));
+    this.add.existing(new Item({
+      scene: this,
+      x: 0,
+      y: 0,
+      sprite: 'red',
+      name: 'red crystal',
+      description: 'a sparkling stone',
+      type: 'crystal',
+      bolted: false
+    }))
+
   }
 
   update(/* t, dt */) {

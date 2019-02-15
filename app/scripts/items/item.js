@@ -28,7 +28,7 @@ export default class Item extends Phaser.GameObjects.Image {
       let mode = scene.registry.get('mode')
       switch(mode) {
       case 'take':
-        player.take(this, scene);
+        player.take(this);
         break;
       case 'put':
         player.put(this);

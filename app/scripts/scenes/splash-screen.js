@@ -49,7 +49,10 @@ export default class SplashScreen extends Phaser.Scene {
       .image('robe')
       .image('apprentice_hat')
       .image('hair')
-      .image('yellow');
+      .image('yellow')
+      .image('red')
+      .image('green')
+      .image('purple');
   }
 
   /**
