@@ -43,9 +43,25 @@ export default class Wrapper extends Phaser.Scene {
 
     this.controls = this.add.existing(new Controls(this));
     this.display = this.add.existing(new Display(this));
-    this.registry.set('mode', 'look')
+    this.registry.set('mode', 'look');
 
-    this.room = this.scene.launch('Basement');
+
+    this.scene.launch('Workshop');
+    this.scene.launch('Basement');
+
+    const basement = this.scene.get('Basement');
+    const workshop = this.scene.get('Workshop');
+
+    this.registry.set('room', 'Basement');
+    //this.scene.setVisible(false, workshop);
+    this.scene.sleep('Workshop');
+  }
+
+  move(next) {
+    let current = this.registry.get('room');
+    this.scene.sleep(current);
+    this.scene.wake(next);
+    this.registry.set('room', next);
   }
 
   update(/* t, dt */) {

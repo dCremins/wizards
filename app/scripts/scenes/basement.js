@@ -1,4 +1,5 @@
 import Container from '@/items/container';
+import Door from '@/items/door';
 import Item from '@/items/item';
 
 export default class Basement extends Phaser.Scene {
@@ -8,7 +9,6 @@ export default class Basement extends Phaser.Scene {
 
   init(/* data */) {
 
-    this.registry.set('room', 'Basement')
   }
 
   preload() {
@@ -19,15 +19,14 @@ export default class Basement extends Phaser.Scene {
     this.add.image(0, 20, 'space').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
     this.background = this.add.image(0, 20, 'basement').setOrigin(0).setDisplaySize(this.registry.get('width'), this.registry.get('height'));
 
-    this.add.existing( new Item({
+    this.add.existing( new Door({
       scene: this,
       x: 570,
       y: 0,
       sprite: 'ladder',
       name: 'ladder',
       description: 'a ladder leading up to the workshop',
-      type: 'scenery',
-      bolted: true
+      path: 'Workshop'
     }));
 
     this.add.existing( new Container({
@@ -53,17 +52,6 @@ export default class Basement extends Phaser.Scene {
         })
       ]
     }));
-    this.add.existing(new Item({
-      scene: this,
-      x: 0,
-      y: 0,
-      sprite: 'red',
-      name: 'red crystal',
-      description: 'a sparkling stone',
-      type: 'crystal',
-      bolted: false
-    }))
-
   }
 
   update(/* t, dt */) {

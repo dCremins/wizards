@@ -84,6 +84,9 @@ export default class Player extends Phaser.GameObjects.Image {
         item.visible = true;
         item.setInteractive({ useHandCursor: false  });
         item.setDisplaySize(50, 50);
+        this.wrapper.add.existing(item);
+        console.log(item.scene);
+        item.remove
       }
     }
 
@@ -98,6 +101,8 @@ export default class Player extends Phaser.GameObjects.Image {
       return;
     } else if (item.type === 'container' || item.bolted === true) {
       this.wrapper.display.setText(`You probably shouldn't move that.`);
+    } else if (item.type === 'door' || item.locked === true) {
+      this.wrapper.display.setText(`It appears to be locked.`);
     } else {
       const success = this.tryTake(item);
       if (success) {
@@ -112,7 +117,11 @@ export default class Player extends Phaser.GameObjects.Image {
 
   use(item) {
     let held = this.wrapper.registry.get('held');
-    if (!held) {
+    if (item.type === 'door' && !item.locked) {
+      this.wrapper.registry.remove('held');
+      //this.wrapper.scene.launch(item.path);
+      this.wrapper.move(item.path)
+    } else if (!held) {
       this.hold(item);
       return;
     } else if (item.type === 'puzzle') {

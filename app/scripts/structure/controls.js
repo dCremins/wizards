@@ -40,7 +40,7 @@ export default class Controls extends Phaser.GameObjects.Group {
         y: y,
         label: 'Use',
         mode: 'use',
-        cursor: 'url(assets/pointer.png), auto'
+        cursor: 'url(assets/use.png), auto'
       }),
       new ControlButton({
         scene: scene,
