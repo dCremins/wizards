@@ -18,10 +18,38 @@ export default class Controls extends Phaser.GameObjects.Group {
     const width = (scene.player.displayWidth / 2);
 
     this.addMultiple([
-      new ControlButton(scene, x, y, 'Look', 'look', 'url(assets/pointer.png), auto'),
-      new ControlButton(scene, x, y + spacing + height, 'Take', 'take', 'url(assets/take.cur), pointer'),
-      new ControlButton(scene, x + spacing + width, y, 'Use', 'use', 'pointer'),
-      new ControlButton(scene, x + spacing + width, y + spacing + height, 'Talk', 'talk', 'pointer')
+      new ControlButton({
+        scene: scene,
+        x: x,
+        y: y + spacing + height,
+        label: 'Look',
+        mode: 'look',
+        cursor: 'url(assets/pointer.png), auto'
+      }),
+      new ControlButton({
+        scene: scene,
+        x: x,
+        y: y,
+        label: 'Take',
+        mode: 'take',
+        cursor: 'url(assets/take.png), auto'
+      }),
+      new ControlButton({
+        scene: scene,
+        x: x + spacing + width,
+        y: y,
+        label: 'Use',
+        mode: 'use',
+        cursor: 'url(assets/use.png), auto'
+      }),
+      new ControlButton({
+        scene: scene,
+        x: x + spacing + width,
+        y: y + spacing + height,
+        label: 'Talk',
+        mode: 'talk',
+        cursor: 'url(assets/pointer.png), auto'
+      })
     ], true);
   }
 }

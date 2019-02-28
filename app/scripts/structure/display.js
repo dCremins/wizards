@@ -15,7 +15,7 @@ export default class Display extends Phaser.GameObjects.Text {
 
     super(scene, x, scene.player.y + spacing, '', {
       lineSpacing: 7,
-      wordWrap: { width: scene.playWidth/2}
+      wordWrap: { width: scene.registry.get('width')-(scene.player.displayWidth*2)-155}
     });
     this.setOrigin(0);
   }
