@@ -83,7 +83,7 @@ export default class SplashScreen extends Phaser.Scene {
       this.registry.set('width', 300);
       this.registry.set('height', 189);
       this.registry.set('ratio', .3);
-      }
+    }
     //  We have nothing left to do here. Start the next scene.
     this.scene.start('Wrapper');
   }

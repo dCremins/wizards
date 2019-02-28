@@ -1,50 +1,58 @@
-import Inventory from '@/structure/inventory';
-
 export default class Player extends Phaser.GameObjects.Image {
 
   constructor(scene, sprite) {
     super(scene, 0, scene.registry.get('height')+30, sprite);
-    this.setDisplaySize(this.width*scene.registry.get('ratio'), this.height*scene.registry.get('ratio'));
+    this.ratio = scene.registry.get('ratio');
+    this.width = scene.registry.get('width');
+    this.height = scene.registry.get('height');
+
+    this.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.setOrigin(0);
     this.inventory = [];
-    let startX = scene.registry.get('width')-50;
-    let startY = scene.registry.get('height')+30;
-    this.inventoryPositions = [{x:startX, y:startY}, {x:startX-50, y:startY}, {x:startX-100, y:startY}, {x:startX, y:startY+50}, {x:startX-50, y:startY+50}, {x:startX-100, y:startY+50}]
+    let startX = this.width-50;
+    let startY = this.height+30;
+    this.inventoryPositions = [
+      {x:startX, y:startY},
+      {x:startX-50, y:startY},
+      {x:startX-100, y:startY},
+      {x:startX, y:startY+50},
+      {x:startX-50, y:startY+50},
+      {x:startX-100, y:startY+50}
+    ];
     this.wrapper = scene;
   }
 
   setHat(scene, hat) {
     hat.setOrigin(0);
-    hat.setPosition(0, scene.registry.get('height')+30);
-    hat.setDisplaySize(this.width*scene.registry.get('ratio'), this.height*scene.registry.get('ratio'));
+    hat.setPosition(0, this.height+30);
+    hat.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.hat = hat;
   }
 
   setClothes(scene, clothes) {
     clothes.setOrigin(0);
-    clothes.setPosition(0, scene.registry.get('height')+30);
-    clothes.setDisplaySize(this.width*scene.registry.get('ratio'), this.height*scene.registry.get('ratio'));
+    clothes.setPosition(0, this.height+30);
+    clothes.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.clothes = clothes;
   }
 
 
   look(item) {
     let readout = [`It's ${item.description}.`];
-    if(item.type === 'container') {
-      let holder=`Inside looks to be`;
+    if (item.type === 'container') {
       for (let i = 0; i < item.contents.length; i++) {
         if (item.contents.length === 1) {
-          readout.push(`Inside looks to be ${item.contents[i].description}.`)
+          readout.push(`Inside looks to be ${item.contents[i].description}.`);
         } else if ((i+1) === item.contents.length) {
-          readout.push(`and ${item.contents[i].description}.`)
+          readout.push(`and ${item.contents[i].description}.`);
         } else if (i === 0) {
-          readout.push(`Inside looks to be ${item.contents[i].description},`)
+          readout.push(`Inside looks to be ${item.contents[i].description},`);
         } else {
-          readout.push(`${item.contents[i].description},`)
+          readout.push(`${item.contents[i].description},`);
         }
       }
     }
-    this.wrapper.display.setText(readout)
+    this.wrapper.display.setText(readout);
   }
 
   tryTake(item) {
@@ -75,9 +83,9 @@ export default class Player extends Phaser.GameObjects.Image {
           content.setInteractive({ useHandCursor: false  });
           this.wrapper.add.existing(content);
         }
-        item.contents = []
+        item.contents = [];
       } else {
-        this.inventory.push(item)
+        this.inventory.push(item);
         this.wrapper.display.setText(`You put the ${item.name} in your bag.`);
         let position = this.inventoryPositions[this.inventory.indexOf(item)];
         item.setPosition(position.x, position.y);
@@ -85,8 +93,7 @@ export default class Player extends Phaser.GameObjects.Image {
         item.setInteractive({ useHandCursor: false  });
         item.setDisplaySize(50, 50);
         this.wrapper.add.existing(item);
-        console.log(item.scene);
-        item.remove
+        item.remove;
       }
     }
 
@@ -119,8 +126,7 @@ export default class Player extends Phaser.GameObjects.Image {
     let held = this.wrapper.registry.get('held');
     if (item.type === 'door' && !item.locked) {
       this.wrapper.registry.remove('held');
-      //this.wrapper.scene.launch(item.path);
-      this.wrapper.move(item.path)
+      this.wrapper.move(item.path);
     } else if (!held) {
       this.hold(item);
       return;
@@ -161,5 +167,4 @@ export default class Player extends Phaser.GameObjects.Image {
     this.wrapper.registry.set('mode', 'look');
     this.wrapper.input.setDefaultCursor('url(assets/pointer.png), auto');
   }
-
 }
