@@ -1,6 +1,7 @@
 import Container from '@/items/container';
 import Door from '@/items/door';
 import Item from '@/items/item';
+import Arnold from '@/people/arnold';
 
 export default class Basement extends Phaser.Scene {
   constructor() {
@@ -51,6 +52,12 @@ export default class Basement extends Phaser.Scene {
           bolted: false
         })
       ]
+    }));
+    this.add.existing( new Arnold({
+      scene: this,
+      x:760,
+      y:290,
+      sprite:'arnold'
     }));
   }
 

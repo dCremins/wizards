@@ -3,14 +3,14 @@ export default class Player extends Phaser.GameObjects.Image {
   constructor(scene, sprite) {
     super(scene, 0, scene.registry.get('height')+30, sprite);
     this.ratio = scene.registry.get('ratio');
-    this.width = scene.registry.get('width');
-    this.height = scene.registry.get('height');
+    this.sceneWidth = scene.registry.get('width');
+    this.sceneHeight = scene.registry.get('height');
 
     this.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.setOrigin(0);
     this.inventory = [];
-    let startX = this.width-50;
-    let startY = this.height+30;
+    let startX = this.sceneWidth-50;
+    let startY = this.sceneHeight+30;
     this.inventoryPositions = [
       {x:startX, y:startY},
       {x:startX-50, y:startY},
@@ -24,14 +24,14 @@ export default class Player extends Phaser.GameObjects.Image {
 
   setHat(scene, hat) {
     hat.setOrigin(0);
-    hat.setPosition(0, this.height+30);
+    hat.setPosition(0, this.sceneHeight+30);
     hat.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.hat = hat;
   }
 
   setClothes(scene, clothes) {
     clothes.setOrigin(0);
-    clothes.setPosition(0, this.height+30);
+    clothes.setPosition(0, this.sceneHeight+30);
     clothes.setDisplaySize(this.width*this.ratio, this.height*this.ratio);
     this.clothes = clothes;
   }
@@ -125,23 +125,11 @@ export default class Player extends Phaser.GameObjects.Image {
   use(item) {
     let held = this.wrapper.registry.get('held');
     if (item.type === 'door' && !item.locked) {
-      this.wrapper.registry.remove('held');
       this.wrapper.move(item.path);
     } else if (!held) {
       this.hold(item);
+      this.wrapper.registry.set('mode', 'put');
       return;
-    } else if (item.type === 'puzzle') {
-      const success = item.solve(held);
-      if (success) {
-        if (this.inventory.includes(held)) {
-          this.inventory.splice( this.inventory.indexOf(held), 1 );
-        }
-        held.destroy();
-      } else {
-        this.wrapper.display.setText(`This doesn't seem to work here.`);
-      }
-    } else if (item.type === 'container') {
-      this.put(item);
     } else {
       this.wrapper.display.setText(`This doesn't seem to work here.`);
     }
@@ -154,13 +142,41 @@ export default class Player extends Phaser.GameObjects.Image {
   put(item) {
     let held = this.wrapper.registry.get('held');
     if (!held) {
-      this.hold(item);
+      this.wrapper.registry.set('mode', 'use');
+      this.use(item);
       return;
+    } else if (item.type === 'puzzle') {
+      const success = item.solve(held);
+      if (success) {
+        if (this.inventory.includes(held)) {
+          this.inventory.splice( this.inventory.indexOf(held), 1 );
+        }
+        held.destroy();
+      } else {
+        this.wrapper.display.setText(`This doesn't seem to work here.`);
+      }
+    } else if (item.type === 'door') {
+      if (item.locked) {
+        if (held === item.key) {
+          item.locked = false;
+          if (this.inventory.includes(held)) {
+            this.inventory.splice( this.inventory.indexOf(held), 1 );
+          }
+          held.destroy();
+          this.wrapper.move(item.path);
+        } else {
+          this.wrapper.display.setText(`This doesn't seem to work here.`);
+        }
+      } else {
+        this.wrapper.display.setText(`That doesn't seem to do anything.`);
+      }
     } else if (item.type === 'container') {
       this.wrapper.display.setText(`You put the ${held.name} in the ${item.name}.`);
       held.visible = false;
       held.removeInteractive();
       item.contents.push(held);
+    } else {
+      this.wrapper.display.setText(`This doesn't seem to work here.`);
     }
 
     this.wrapper.registry.remove('held');
