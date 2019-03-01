@@ -19,7 +19,7 @@ export default class Wrapper extends Phaser.Scene {
   create(/* data */) {
 
     this.player = this.add.existing(new Player(this, 'base'));
-    this.registry.set('player', this.player)
+    this.registry.set('player', this.player);
     const clothes = this.add.existing(new Item({
       scene: this,
       x: 0,
@@ -45,16 +45,12 @@ export default class Wrapper extends Phaser.Scene {
     this.display = this.add.existing(new Display(this));
     this.registry.set('mode', 'look');
 
-
     this.scene.launch('Workshop');
     this.scene.launch('Basement');
-
-    const basement = this.scene.get('Basement');
-    const workshop = this.scene.get('Workshop');
+    this.scene.sleep('Workshop');
 
     this.registry.set('room', 'Basement');
-    //this.scene.setVisible(false, workshop);
-    this.scene.sleep('Workshop');
+    this.registry.set('wrapper', this);
   }
 
   move(next) {

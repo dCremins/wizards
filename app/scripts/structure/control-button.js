@@ -29,7 +29,6 @@ export default class ControlButton extends Phaser.GameObjects.Text {
 
     this.on('pointerup', () => {
       scene.registry.set('mode', mode);
-      console.log(mode);
       scene.input.setDefaultCursor(cursor);
     });
   }

@@ -43,8 +43,7 @@ export default class SplashScreen extends Phaser.Scene {
       .image('hat')
       .image('ladder')
       .image('lamp')
-      .image('arnold_wake')
-      .image('arnold_sleep')
+      .image('arnold')
       .image('base')
       .image('robe')
       .image('apprentice_hat')
@@ -83,7 +82,7 @@ export default class SplashScreen extends Phaser.Scene {
       this.registry.set('width', 300);
       this.registry.set('height', 189);
       this.registry.set('ratio', .3);
-      }
+    }
     //  We have nothing left to do here. Start the next scene.
     this.scene.start('Wrapper');
   }

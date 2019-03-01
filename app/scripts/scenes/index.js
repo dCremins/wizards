@@ -7,6 +7,6 @@
  */
 
 export {default as SplashScreen} from './splash-screen';
-export {default as Workshop} from './workshop';
+export {default as Workshop} from '../rooms/workshop';
 export {default as Wrapper} from './wrapper';
-export {default as Basement} from './basement';
+export {default as Basement} from '../rooms/basement';

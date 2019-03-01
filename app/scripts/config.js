@@ -48,5 +48,4 @@ export const plugins = {
 };
 
 export {title, version, url} from '@/../../package.json';
-
 export const scene = Object.values(scenes);
