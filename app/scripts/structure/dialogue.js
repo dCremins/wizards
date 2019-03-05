@@ -29,7 +29,7 @@ export default class Dialogue extends Phaser.GameObjects.Text {
       this.setBackgroundColor('#000');
     });
     this.on('pointerup', () => {
-      person.talk(key)
+      person.talk(key);
     });
   }
 }

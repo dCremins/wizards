@@ -25,11 +25,9 @@ export default class Person extends Phaser.GameObjects.Image {
         this.wrapper.display.setText(`They probably wouldn't like that.`);
         break;
       case 'put':
-        console.log('put', held);
         this.show(held);
         break;
       case 'use':
-        console.log('use', held);
         this.show(held);
         break;
       case 'talk':
@@ -43,11 +41,10 @@ export default class Person extends Phaser.GameObjects.Image {
   }
 
   give(item) {
-
+    return item;
   }
 
   show(item) {
-    console.log(item)
     this.responses.clear(true, true);
     this.responses.displayHeight = 0;
     this.wrapper.display.setText([`You show the ${item.name} to ${this.name}.`, `"${this.dialogue[item.name]}"`]);
@@ -56,7 +53,7 @@ export default class Person extends Phaser.GameObjects.Image {
   talk(res) {
     this.responses.clear(true, true);
     this.responses.displayHeight = 0;
-    this.wrapper.display.setText([`"${this.dialogue[res]}"`])
+    this.wrapper.display.setText([`"${this.dialogue[res]}"`]);
     if (res === 'leave') {
       this.wrapper.registry.set('mode', 'look');
       this.wrapper.input.setDefaultCursor('url(assets/pointer.png), auto');
